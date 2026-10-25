@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Abacus.MainPage"
+             BackgroundColor="#617891">
+
+    <Grid RowDefinitions="*, Auto, Auto, Auto, Auto, Auto"
+          ColumnDefinitions="*, *, *, *"
+          Padding="20"
+          RowSpacing="10"
+          ColumnSpacing="10">
+
+        <Border Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="4"
+                BackgroundColor="#D5B893"
+                Stroke="#25344F"
+                StrokeThickness="2"
+                StrokeShape="RoundRectangle 12"
+                Margin="0, 0, 0, 10">
+
+            <!-- Экран калькулятора -->
+            <Label x:Name="textusSumma"
+                   Text="0"
+                   FontSize="42"
+                   TextColor="#25344F"
+                   HorizontalOptions="End"
+                   VerticalTextAlignment="Center"
+                   Grid.Row="0"
+                   Grid.ColumnSpan="4"
+                   Padding="20, 0" />
+        </Border>
+
+        <!-- Кнопка сброса -->
+        <Button x:Name="pulsatorDele" 
+                Text="Сброс"
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Clicked="InDelePulsato"
+                BackgroundColor="#632024"
+                TextColor="#D5B893"
+                FontSize="42" />
+
+        <!-- Кнопки с цифрами 7, 8, 9 -->
+        <Button x:Name="pulsatorSeptem"
+                Text="7"
+                Grid.Row="2"
+                Grid.Column="0"
+                Clicked="InDigitoPulsato"
+                BackgroundColor="#25344F"
+                TextColor="#617891"
+                FontSize="42" />
+
+        <Button x:Name="pulsatorOcto"
+                Text="8"
+                Grid.Row="2"
+                Grid.Column="1"
+                Clicked="InDigitoPulsato"
+                BackgroundColor="#25344F"
+                TextColor="#617891"
+                FontSize="42" />
+
+        <Button x:Name="pulsatorNovem"
+                Text="9"
+                Grid.Row="2"
+                Grid.Column="2"
+                Clicked="InDigitoPulsato"
+                BackgroundColor="#25344F"
+                TextColor="#617891"
+                FontSize="42" />
+
+        <!-- Кнопки с цифрами 4, 5, 6 -->
+        <Button x:Name="pulsatorQuattuor" 
+                Text="4"
+                Grid.Row="3"
+                Grid.Column="0"
+                Clicked="InDigitoPulsato"
+                BackgroundColor="#25344F"
+                TextColor="#617891"
+                FontSize="42" />
+
+        <Button x:Name="pulsatorQuinque" 
+                Text="5"
+                Grid.Row="3"
+                Grid.Column="1"
+                Clicked="InDigitoPulsato"
+                BackgroundColor="#25344F"
+                TextColor="#617891"
+                FontSize="42" />
+
+        <Button x:Name="pulsatorSex" 
+                Text="6"
+                Grid.Row="3"
+                Grid.Column="2"
+                Clicked="InDigitoPulsato"
+                BackgroundColor="#25344F"
+                TextColor="#617891"
+                FontSize="42" />
+
+        <!-- Кнопки с цифрами 1, 2, 3 -->
+        <Button x:Name="pulsatorUnus" 
+                Text="1"
+                Grid.Row="4"
+                Grid.Column="0"
+                Clicked="InDigitoPulsato"
+                BackgroundColor="#25344F"
+                TextColor="#617891"
+                FontSize="42" />
+
+        <Button x:Name="pulsatorDuo" 
+                Text="2"
+                Grid.Row="4"
+                Grid.Column="1"
+                Clicked="InDigitoPulsato"
+                BackgroundColor="#25344F"
+                TextColor="#617891"
+                FontSize="42" />
+
+        <Button x:Name="pulsatorTres" 
+                Text="3"
+                Grid.Row="4"
+                Grid.Column="2"
+                Clicked="InDigitoPulsato"
+                BackgroundColor="#25344F"
+                TextColor="#617891"
+                FontSize="42" />
+
+        <!-- Кнопка с цифрой 0 -->
+        <Button x:Name="pulsatorNihil" 
+                Text="0"
+                Grid.Row="5"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Clicked="InDigitoPulsato"
+                BackgroundColor="#25344F"
+                TextColor="#617891"
+                FontSize="42" />
+
+        <!-- Кнопки арифметических операций -->
+        <Button x:Name="pulsatorDivide" 
+                Text="&#247;"
+                Grid.Row="1"
+                Grid.Column="4"
+                Clicked="InOperationePulsata"
+                BackgroundColor="#D5B893"
+                TextColor="#6F4D38"
+                FontSize="42" />
+
+        <Button x:Name="pulsatorMultiplica" 
+                Text="&#215;"
+                Grid.Row="2"
+                Grid.Column="4"
+                Clicked="InOperationePulsata"
+                BackgroundColor="#D5B893"
+                TextColor="#6F4D38"
+                FontSize="42" />
+
+        <Button x:Name="pulsatorMinus" 
+                Text="&#45;"
+                Grid.Row="3"
+                Grid.Column="4"
+                Clicked="InOperationePulsata"
+                BackgroundColor="#D5B893"
+                TextColor="#6F4D38"
+                FontSize="42" />
+
+        <Button x:Name="pulsatorPlus" 
+                Text="&#43;"
+                Grid.Row="4"
+                Grid.Column="4"
+                Clicked="InOperationePulsata"
+                BackgroundColor="#D5B893"
+                TextColor="#6F4D38"
+                FontSize="42" />
+
+        <!-- Кнопка результата -->
+        <Button x:Name="pulsatorFacit" 
+                Text="&#61;"
+                Grid.Row="5"
+                Grid.Column="4"
+                Clicked="InFacitPostulato"
+                BackgroundColor="#6F4D38"
+                TextColor="#D5B893"
+                FontSize="42" />
+    </Grid>
+</ContentPage>

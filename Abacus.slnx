@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="../Probatio/Probatio.csproj" />
+  <Project Path="../Pulvis/Pulvis.csproj" />
+  <Project Path="Abacus.csproj">
+    <Deploy Solution="Debug|*" />
+  </Project>
+</Solution>

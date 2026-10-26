@@ -126,13 +126,30 @@
                 TextColor="#617891"
                 FontSize="42" />
 
-        <!-- Кнопка с цифрой 0 -->
+        <!-- Кнопки смены знака, с цифрой 0 и десятичного разделителя -->
+        <Button x:Name="pulsatorSignum" 
+                Text="&#177;"
+                Grid.Row="5"
+                Grid.Column="0"
+                Clicked="InSignoPulsato"
+                BackgroundColor="#25344F"
+                TextColor="#617891"
+                FontSize="42" />
+
         <Button x:Name="pulsatorNihil" 
                 Text="0"
                 Grid.Row="5"
-                Grid.Column="0"
-                Grid.ColumnSpan="3"
+                Grid.Column="1"
                 Clicked="InDigitoPulsato"
+                BackgroundColor="#25344F"
+                TextColor="#617891"
+                FontSize="42" />
+
+        <Button x:Name="pulsatorPunctum" 
+                Text=","
+                Grid.Row="5"
+                Grid.Column="2"
+                Clicked="InPunctoPulsato"
                 BackgroundColor="#25344F"
                 TextColor="#617891"
                 FontSize="42" />

@@ -10,6 +10,8 @@
           RowSpacing="10"
           ColumnSpacing="10">
 
+
+        <!-- Экран калькулятора -->
         <Border Grid.Row="0"
                 Grid.Column="0"
                 Grid.ColumnSpan="4"
@@ -19,8 +21,7 @@
                 StrokeShape="RoundRectangle 12"
                 Margin="0, 0, 0, 10">
 
-            <!-- Экран калькулятора -->
-            <Label x:Name="textusSumma"
+            <Label x:Name="displayText"
                    Text="0"
                    FontSize="42"
                    TextColor="#25344F"
@@ -32,171 +33,171 @@
         </Border>
 
         <!-- Кнопка сброса -->
-        <Button x:Name="pulsatorDele" 
+        <Button x:Name="buttonClear" 
                 Text="Сброс"
                 Grid.Row="1"
                 Grid.Column="0"
                 Grid.ColumnSpan="3"
-                Clicked="InDelePulsato"
+                Clicked="buttonClear_Clicked"
                 BackgroundColor="#632024"
                 TextColor="#D5B893"
                 FontSize="42" />
 
         <!-- Кнопки с цифрами 7, 8, 9 -->
-        <Button x:Name="pulsatorSeptem"
+        <Button x:Name="buttonSeven"
                 Text="7"
                 Grid.Row="2"
                 Grid.Column="0"
-                Clicked="InDigitoPulsato"
+                Clicked="buttonDigits_Clicked"
                 BackgroundColor="#25344F"
                 TextColor="#617891"
                 FontSize="42" />
 
-        <Button x:Name="pulsatorOcto"
+        <Button x:Name="buttonEight"
                 Text="8"
                 Grid.Row="2"
                 Grid.Column="1"
-                Clicked="InDigitoPulsato"
+                Clicked="buttonDigits_Clicked"
                 BackgroundColor="#25344F"
                 TextColor="#617891"
                 FontSize="42" />
 
-        <Button x:Name="pulsatorNovem"
+        <Button x:Name="buttonNine"
                 Text="9"
                 Grid.Row="2"
                 Grid.Column="2"
-                Clicked="InDigitoPulsato"
+                Clicked="buttonDigits_Clicked"
                 BackgroundColor="#25344F"
                 TextColor="#617891"
                 FontSize="42" />
 
         <!-- Кнопки с цифрами 4, 5, 6 -->
-        <Button x:Name="pulsatorQuattuor" 
+        <Button x:Name="buttonFour" 
                 Text="4"
                 Grid.Row="3"
                 Grid.Column="0"
-                Clicked="InDigitoPulsato"
+                Clicked="buttonDigits_Clicked"
                 BackgroundColor="#25344F"
                 TextColor="#617891"
                 FontSize="42" />
 
-        <Button x:Name="pulsatorQuinque" 
+        <Button x:Name="buttonFive" 
                 Text="5"
                 Grid.Row="3"
                 Grid.Column="1"
-                Clicked="InDigitoPulsato"
+                Clicked="buttonDigits_Clicked"
                 BackgroundColor="#25344F"
                 TextColor="#617891"
                 FontSize="42" />
 
-        <Button x:Name="pulsatorSex" 
+        <Button x:Name="buttonSix" 
                 Text="6"
                 Grid.Row="3"
                 Grid.Column="2"
-                Clicked="InDigitoPulsato"
+                Clicked="buttonDigits_Clicked"
                 BackgroundColor="#25344F"
                 TextColor="#617891"
                 FontSize="42" />
 
         <!-- Кнопки с цифрами 1, 2, 3 -->
-        <Button x:Name="pulsatorUnus" 
+        <Button x:Name="buttonOne" 
                 Text="1"
                 Grid.Row="4"
                 Grid.Column="0"
-                Clicked="InDigitoPulsato"
+                Clicked="buttonDigits_Clicked"
                 BackgroundColor="#25344F"
                 TextColor="#617891"
                 FontSize="42" />
 
-        <Button x:Name="pulsatorDuo" 
+        <Button x:Name="buttonTwo" 
                 Text="2"
                 Grid.Row="4"
                 Grid.Column="1"
-                Clicked="InDigitoPulsato"
+                Clicked="buttonDigits_Clicked"
                 BackgroundColor="#25344F"
                 TextColor="#617891"
                 FontSize="42" />
 
-        <Button x:Name="pulsatorTres" 
+        <Button x:Name="buttonThree" 
                 Text="3"
                 Grid.Row="4"
                 Grid.Column="2"
-                Clicked="InDigitoPulsato"
+                Clicked="buttonDigits_Clicked"
                 BackgroundColor="#25344F"
                 TextColor="#617891"
                 FontSize="42" />
 
-        <!-- Кнопки смены знака, с цифрой 0 и десятичного разделителя -->
-        <Button x:Name="pulsatorSignum" 
+        <!-- Кнопки смены знака, цифры 0 и десятичного разделителя -->
+        <Button x:Name="buttonToggleSign" 
                 Text="&#177;"
                 Grid.Row="5"
                 Grid.Column="0"
-                Clicked="InSignoPulsato"
+                Clicked="buttonToggleSign_Clicked"
                 BackgroundColor="#25344F"
                 TextColor="#617891"
                 FontSize="42" />
 
-        <Button x:Name="pulsatorNihil" 
+        <Button x:Name="buttonZero" 
                 Text="0"
                 Grid.Row="5"
                 Grid.Column="1"
-                Clicked="InDigitoPulsato"
+                Clicked="buttonDigits_Clicked"
                 BackgroundColor="#25344F"
                 TextColor="#617891"
                 FontSize="42" />
 
-        <Button x:Name="pulsatorPunctum" 
+        <Button x:Name="buttonDecimal" 
                 Text=","
                 Grid.Row="5"
                 Grid.Column="2"
-                Clicked="InPunctoPulsato"
+                Clicked="buttonDecimal_Clicked"
                 BackgroundColor="#25344F"
                 TextColor="#617891"
                 FontSize="42" />
 
         <!-- Кнопки арифметических операций -->
-        <Button x:Name="pulsatorDivide" 
+        <Button x:Name="buttonDivideOperator" 
                 Text="&#247;"
                 Grid.Row="1"
-                Grid.Column="4"
-                Clicked="InOperationePulsata"
+                Grid.Column="3"
+                Clicked="buttonOperators_Clicked"
                 BackgroundColor="#D5B893"
                 TextColor="#6F4D38"
                 FontSize="42" />
 
-        <Button x:Name="pulsatorMultiplica" 
+        <Button x:Name="buttonMultiplyOperator" 
                 Text="&#215;"
                 Grid.Row="2"
-                Grid.Column="4"
-                Clicked="InOperationePulsata"
+                Grid.Column="3"
+                Clicked="buttonOperators_Clicked"
                 BackgroundColor="#D5B893"
                 TextColor="#6F4D38"
                 FontSize="42" />
 
-        <Button x:Name="pulsatorMinus" 
+        <Button x:Name="buttonMinusOperator" 
                 Text="&#45;"
                 Grid.Row="3"
-                Grid.Column="4"
-                Clicked="InOperationePulsata"
+                Grid.Column="3"
+                Clicked="buttonOperators_Clicked"
                 BackgroundColor="#D5B893"
                 TextColor="#6F4D38"
                 FontSize="42" />
 
-        <Button x:Name="pulsatorPlus" 
+        <Button x:Name="buttonPlusOperator" 
                 Text="&#43;"
                 Grid.Row="4"
-                Grid.Column="4"
-                Clicked="InOperationePulsata"
+                Grid.Column="3"
+                Clicked="buttonOperators_Clicked"
                 BackgroundColor="#D5B893"
                 TextColor="#6F4D38"
                 FontSize="42" />
 
         <!-- Кнопка результата -->
-        <Button x:Name="pulsatorFacit" 
+        <Button x:Name="buttonEqual" 
                 Text="&#61;"
                 Grid.Row="5"
-                Grid.Column="4"
-                Clicked="InFacitPostulato"
+                Grid.Column="3"
+                Clicked="buttonEqual_Clicked"
                 BackgroundColor="#6F4D38"
                 TextColor="#D5B893"
                 FontSize="42" />

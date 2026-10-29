@@ -7,135 +7,114 @@ namespace Probatio
     {
         private Pulvis.Pulvis _pulvis = new Pulvis.Pulvis();
 
-        // Тест на отображение нуля при запуске калькулятора
         [TestMethod]
-        public void ProbatioTest()
+        public void TestInitialDisplayIsZero()
         {
-            Assert.AreEqual(0, _pulvis.textusSumma);
+            Assert.AreEqual(0, _pulvis.DisplayValue);
         }
 
-        // Тест деления на ноль
         [TestMethod]
-        public void ProbatioDivisionisPerNihil()
+        public void TestDivisionByZero()
         {
-            double summa = _pulvis.calculatura(8, 0, "÷");
-            Assert.IsTrue(double.IsNaN(summa));
+            double result = _pulvis.calculatura(8, 0, "÷");
+            Assert.IsTrue(double.IsNaN(result));
         }
 
-        // Тест деления
         [TestMethod]
-        public void ProbatioDivisionis()
+        public void TestDivision()
         {
-            double summa = _pulvis.calculatura(42, 7, "÷");
-            Assert.AreEqual(6, summa);
+            double result = _pulvis.calculatura(42, 7, "÷");
+            Assert.AreEqual(6, result);
         }
 
-        // Тест умножения
         [TestMethod]
-        public void ProbatioMultiplicationis()
+        public void TestMultiplication()
         {
-            double summa = _pulvis.calculatura(4, 3, "×");
-            Assert.AreEqual(12, summa);
+            double result = _pulvis.calculatura(4, 3, "×");
+            Assert.AreEqual(12, result);
         }
 
-        // Тест вычитания
         [TestMethod]
-        public void ProbatioSubtractionis()
+        public void TestSubtraction()
         {
-            double summa = _pulvis.calculatura(10, 4, "-");
-            Assert.AreEqual(6, summa);
+            double result = _pulvis.calculatura(10, 4, "-");
+            Assert.AreEqual(6, result);
         }
 
-        // Тест сложения
         [TestMethod]
-        public void ProbatioAdditionis()
+        public void TestAddition()
         {
-            double summa = _pulvis.calculatura(5, 3, "+");
-            Assert.AreEqual(8, summa);
+            double result = _pulvis.calculatura(5, 3, "+");
+            Assert.AreEqual(8, result);
         }
 
-        // Тест для проверки неизвестной или пустой операции
         [TestMethod]
-        public void ProbatioOperationisIncongnitae()
+        public void TestUnknownOperator()
         {
-            double summa = _pulvis.calculatura(10, 5, "?");
-            Assert.AreEqual(0, summa);
+            double result = _pulvis.calculatura(10, 5, "?");
+            Assert.AreEqual(0, result);
         }
 
-
-        // ---
-
-
-        // Тест последовательного ввода цифр (формирование многозначного числа)
         [TestMethod]
-        public void ProbatioRegistrationisDigitorum()
+        public void TestAppendDigitsSequence()
         {
-            string pantala = "0";
-            pantala = _pulvis.RegisteDigitum(pantala, "5");
-            pantala = _pulvis.RegisteDigitum(pantala, "2");
+            string screenText = "0";
+            screenText = _pulvis.AppendDigit(screenText, "5");
+            screenText = _pulvis.AppendDigit(screenText, "2");
 
-            Assert.AreEqual("52", pantala);
+            Assert.AreEqual("52", screenText);
         }
 
-        // Тест последовательных вычислений в цепочке (ТЗ Пункт 3)
-        // Пример: 2 + 3 + 4 должен дать промежуточный итог 5 перед вторым плюсом
         [TestMethod]
-        public void ProbatioChainCalculationis()
+        public void TestChainCalculation()
         {
             _pulvis.ClearAll();
-            string pantala = "2";
-            pantala = _pulvis.RegisteOperationem(pantala, "+", ",");
-            pantala = _pulvis.RegisteDigitum(pantala, "3");
+            string screenText = "2";
+            screenText = _pulvis.ApplyOperator(screenText, "+", ",");
+            screenText = _pulvis.AppendDigit(screenText, "3");
 
-            // Нажимаем следующий "+" — калькулятор должен автоматически выдать промежуточные 5
-            pantala = _pulvis.RegisteOperationem(pantala, "+", ",");
+            screenText = _pulvis.ApplyOperator(screenText, "+", ",");
 
-            Assert.AreEqual("5", pantala);
-            Assert.AreEqual(5, _pulvis.NumerusPrimus);
+            Assert.AreEqual("5", screenText);
+            Assert.AreEqual(5, _pulvis.FirstNumber);
         }
 
-        // Тест повторного вычисления последней операции (ТЗ Пункт 4)
-        // Пример: 5 + 3 = 8, затем снова = -> 11 (8 + 3)
         [TestMethod]
-        public void ProbatioRepetitionisOperationis()
+        public void TestRepeatLastOperator()
         {
             _pulvis.ClearAll();
-            string pantala = "5";
-            pantala = _pulvis.RegisteOperationem(pantala, "+", ",");
-            pantala = _pulvis.RegisteDigitum(pantala, "3");
+            string screenText = "5";
+            screenText = _pulvis.ApplyOperator(screenText, "+", ",");
+            screenText = _pulvis.AppendDigit(screenText, "3");
 
-            // Первое нажатие "="
-            pantala = _pulvis.ComputeFacit(pantala, ",");
-            Assert.AreEqual("8", pantala);
+            screenText = _pulvis.CalculateResult(screenText, ",");
+            Assert.AreEqual("8", screenText);
 
-            // Повторное нажатие "=" (должно прибавиться еще раз 3)
-            pantala = _pulvis.ComputeFacit(pantala, ",");
-            Assert.AreEqual("11", pantala);
+            screenText = _pulvis.CalculateResult(screenText, ",");
+            Assert.AreEqual("11", screenText);
         }
 
-        // Тест блокировки некорректного ввода двух разделителей подряд (ТЗ Пункт 5)
         [TestMethod]
-        public void ProbatioSeparatorisDuplicati()
+        public void TestDuplicateDecimalSeparator()
         {
             _pulvis.ClearAll();
-            string pantala = "5";
-            pantala = _pulvis.RegisteSeparatorem(pantala, ",");
-            pantala = _pulvis.RegisteSeparatorem(pantala, ",");
+            string screenText = "5";
+            screenText = _pulvis.AppendDecimalSeparator(screenText, ",");
+            screenText = _pulvis.AppendDecimalSeparator(screenText, ",");
 
-            Assert.AreEqual("5,", pantala);
+            Assert.AreEqual("5,", screenText);
         }
 
-        // Тест функции полного сброса состояния калькулятора (ТЗ Пункт 6)
         [TestMethod]
-        public void ProbatioClearAll()
+        public void TestClearAllState()
         {
-            string pantala = "7";
-            pantala = _pulvis.RegisteOperationem(pantala, "+", ",");
+            string screenText = "7";
+            screenText = _pulvis.ApplyOperator(screenText, "+", ",");
             _pulvis.ClearAll();
 
-            Assert.AreEqual(0, _pulvis.NumerusPrimus);
-            Assert.AreEqual(string.Empty, _pulvis.OperatioCurrens);
-            Assert.IsFalse(_pulvis.IsOperatioPulsata);
+            Assert.AreEqual(0, _pulvis.FirstNumber);
+            Assert.AreEqual(string.Empty, _pulvis.CurrentOperator);
+            Assert.IsFalse(_pulvis.IsOperatorPressed);
         }
     }
 }

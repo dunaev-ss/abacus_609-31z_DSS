@@ -4,58 +4,51 @@ namespace Abacus
 {
     public partial class MainPage : ContentPage
     {
-        private readonly Pulvis.Pulvis _calculatio = new Pulvis.Pulvis();
-        private readonly string _separatorSystematis = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+        private readonly Pulvis.Pulvis _calculator = new Pulvis.Pulvis();
+        private readonly string _decimalSeparator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
         
-        // Конструктор страницы — он собирает визуальные элементы из XAML
         public MainPage()
         {
             InitializeComponent();
-            
-            pulsatorPunctum.Text = _separatorSystematis;
+
+            buttonDecimal.Text = _decimalSeparator;
         }
 
-        // Обработчик для кнопок с цифрами
-        private void InDigitoPulsato(object sender, EventArgs e)
+        private void buttonClear_Clicked(object sender, EventArgs e)
         {
-            Button pulsator = (Button)sender;
-            string clavisPulsata = pulsator.Text;
-                        
-            textusSumma.Text = _calculatio.RegisteDigitum(textusSumma.Text, clavisPulsata);
+            _calculator.ClearAll();
+            displayText.Text = "0";
+        }
+        
+        private void buttonDigits_Clicked(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            string digitText = button.Text;
+
+            displayText.Text = _calculator.AppendDigit(displayText.Text, digitText);
+        }
+        
+        private void buttonToggleSign_Clicked(object sender, EventArgs e)
+        {
+            displayText.Text = _calculator.ToggleSign(displayText.Text);
         }
 
-        // Обработчик для кнопок с операциями "÷", "×", "-" и "+"
-        private void InOperationePulsata(object sender, EventArgs e)
+        private void buttonDecimal_Clicked(object sender, EventArgs e)
         {
-            Button pulsator = (Button)sender;
-            string operationNova = pulsator.Text;
-
-            textusSumma.Text = _calculatio.RegisteOperationem(textusSumma.Text, operationNova, _separatorSystematis);
+            displayText.Text = _calculator.AppendDecimalSeparator(displayText.Text, _decimalSeparator);
         }
-
-        // Обработчик для кнопки результата ("=")
-        private void InFacitPostulato(object sender, EventArgs e)
+        
+        private void buttonOperators_Clicked(object sender, EventArgs e)
         {
-            textusSumma.Text = _calculatio.ComputeFacit(textusSumma.Text, _separatorSystematis);
+            Button button = (Button)sender;
+            string selectedOperator = button.Text;
+
+            displayText.Text = _calculator.ApplyOperator(displayText.Text, selectedOperator, _decimalSeparator);
         }
-
-        // Обработчик для кнопки сброса
-        private void InDelePulsato(object sender, EventArgs e)
+        
+        private void buttonEqual_Clicked(object sender, EventArgs e)
         {
-           _calculatio.ClearAll();
-            textusSumma.Text = "0";
-        }
-
-        // Обработчик для кнопки смены знака
-        private void InSignoPulsato(object sender, EventArgs e)
-        {
-            textusSumma.Text = _calculatio.RegisteSignum(textusSumma.Text);
-        }
-
-        // Обработчик для кнопки десятичного разделителя
-        private void InPunctoPulsato(object sender, EventArgs e)
-        {
-            textusSumma.Text = _calculatio.RegisteSeparatorem(textusSumma.Text, _separatorSystematis);
+            displayText.Text = _calculator.CalculateResult(displayText.Text, _decimalSeparator);
         }
     }
 }

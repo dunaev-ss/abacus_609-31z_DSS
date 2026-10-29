@@ -4,188 +4,182 @@ namespace Pulvis
 {
     public class Pulvis
     {
-        public double NumerusPrimus { get; private set; } = 0;
-        public string OperatioCurrens { get; private set; } = string.Empty;
-        public bool IsOperatioPulsata { get; set; } = false;
+        public double FirstNumber { get; private set; } = 0;
+        public string CurrentOperator { get; private set; } = string.Empty;
+        public bool IsOperatorPressed { get; set; } = false;
 
-        public double NumerusUltimusSecundus { get; private set; } = 0;
-        public string OperatioUltima { get; private set; } = string.Empty;
-        public bool IsFacitPulsatum { get; set; } = false;
+        public double LastSecondNumber { get; private set; } = 0;
+        public string LastOperator { get; private set; } = string.Empty;
+        public bool IsEqualsPressed { get; set; } = false;
 
-        public double textusSumma { get; private set; } = 0;
+        public double DisplayValue { get; private set; } = 0;
 
-        public double calculatura(double primus, double secundus, string operatio)
+        public double calculatura(double firstNumber, double secondNumber, string selectedOperator)
         {
-            double summa;
+            double result;
 
-            switch (operatio)
+            switch (selectedOperator)
             {
                 case "÷":
-                    if (secundus == 0)
+                    if (secondNumber == 0)
                     {
                         return double.NaN;
                     }
-                    summa = primus / secundus;
+                    result = firstNumber / secondNumber;
                     break;
 
                 case "×":
-                    summa = primus * secundus;
+                    result = firstNumber * secondNumber;
                     break;
 
                 case "-":
-                    summa = primus - secundus;
+                    result = firstNumber - secondNumber;
                     break;
 
                 case "+":
-                    summa = primus + secundus;
+                    result = firstNumber + secondNumber;
                     break;
 
                 default:
-                    summa = 0;
+                    result = 0;
                     break;
             }
 
-            textusSumma = summa;
+            DisplayValue = result;
 
-            return summa;
+            return result;
         }
 
-        // Управление вводом цифр (0-9)
-        public string RegisteDigitum(string textusPantalae, string digitus)
+        public string AppendDigit(string screenText, string digitText)
         {
-            if (IsOperatioPulsata || IsFacitPulsatum || textusPantalae == "Divisio per nihil!")
+            if (IsOperatorPressed || IsEqualsPressed || screenText == "Деление на 0!")
             {
-                textusPantalae = string.Empty;
-                IsOperatioPulsata = false;
+                screenText = string.Empty;
+                IsOperatorPressed = false;
 
-                if (IsFacitPulsatum)
+                if (IsEqualsPressed)
                 {
-                    OperatioUltima = string.Empty;
-                    IsFacitPulsatum = false;
+                    LastOperator = string.Empty;
+                    IsEqualsPressed = false;
                 }
             }
 
-            if (textusPantalae == "0") { textusPantalae = string.Empty; }
+            if (screenText == "0") { screenText = string.Empty; }
 
-            return textusPantalae + digitus;
+            return screenText + digitText;
         }
 
-        // Управление вводом десятичного разделителя
-        public string RegisteSeparatorem(string textusPantalae, string separator)
+        public string AppendDecimalSeparator(string screenText, string decimalSeparator)
         {
-            if (IsOperatioPulsata || IsFacitPulsatum || textusPantalae == "Divisio per nihil!")
+            if (IsOperatorPressed || IsEqualsPressed || screenText == "Деление на 0!")
             {
-                IsOperatioPulsata = false;
-                if (IsFacitPulsatum)
+                IsOperatorPressed = false;
+                if (IsEqualsPressed)
                 {
-                    OperatioUltima = string.Empty;
-                    IsFacitPulsatum = false;
+                    LastOperator = string.Empty;
+                    IsEqualsPressed = false;
                 }
-                return "0" + separator;
+                return "0" + decimalSeparator;
             }
 
-            if (!textusPantalae.Contains(separator))
+            if (!screenText.Contains(decimalSeparator))
             {
-                if (string.IsNullOrEmpty(textusPantalae)) { textusPantalae = "0"; }
-                textusPantalae += separator;
+                if (string.IsNullOrEmpty(screenText)) { screenText = "0"; }
+                screenText += decimalSeparator;
             }
 
-            return textusPantalae;
+            return screenText;
         }
 
-        // Управление сменой знака числа
-        public string RegisteSignum(string textusPantalae)
+        public string ToggleSign(string screenText)
         {
-            if (textusPantalae == "0" || textusPantalae == "Divisio per nihil!") { return textusPantalae; }
+            if (screenText == "0" || screenText == "Деление на 0!") { return screenText; }
 
-            if (textusPantalae.StartsWith("-"))
+            if (screenText.StartsWith("-"))
             {
-                return textusPantalae.Substring(1);
+                return screenText.Substring(1);
             }
             else
             {
-                return "-" + textusPantalae;
+                return "-" + screenText;
             }
         }
 
-        // Управление последовательными вычислениями в цепочке
-        public string RegisteOperationem(string textusPantalae, string operatioNova, string separator)
+        public string ApplyOperator(string screenText, string selectedOperator, string decimalSeparator)
         {
-            string textusAdParsendum = textusPantalae.Replace(separator, ".");
+            string textToParse = screenText.Replace(decimalSeparator, ".");
 
-            if (!string.IsNullOrEmpty(OperatioCurrens) && !IsOperatioPulsata && !IsFacitPulsatum)
+            if (!string.IsNullOrEmpty(CurrentOperator) && !IsOperatorPressed && !IsEqualsPressed)
             {
-                double numerusSecundus = double.Parse(textusAdParsendum, CultureInfo.InvariantCulture);
-                double summaIntermedia = calculatura(NumerusPrimus, numerusSecundus, OperatioCurrens);
+                double secondNumber = double.Parse(textToParse, CultureInfo.InvariantCulture);
+                double intermediateResult = calculatura(FirstNumber, secondNumber, CurrentOperator);
 
-                if (double.IsNaN(summaIntermedia))
+                if (double.IsNaN(intermediateResult))
                 {
                     ClearAll();
-                    return "Divisio per nihil!";
+                    return "Деление на 0!";
                 }
 
-                NumerusPrimus = summaIntermedia;
-                textusPantalae = summaIntermedia.ToString(CultureInfo.InvariantCulture).Replace(".", separator);
+                FirstNumber = intermediateResult;
+                screenText = intermediateResult.ToString(CultureInfo.InvariantCulture).Replace(".", decimalSeparator);
             }
             else
             {
-                NumerusPrimus = double.Parse(textusAdParsendum, CultureInfo.InvariantCulture);
+                FirstNumber = double.Parse(textToParse, CultureInfo.InvariantCulture);
             }
 
-            OperatioCurrens = operatioNova;
-            IsOperatioPulsata = true;
-            IsFacitPulsatum = false;
+            CurrentOperator = selectedOperator;
+            IsOperatorPressed = true;
+            IsEqualsPressed = false;
 
-            return textusPantalae;
+            return screenText;
         }
 
-        // Управление вычислением по кнопке "=" и повторением последней операции
-        public string ComputeFacit(string textusPantalae, string separator)
+        public string CalculateResult(string screenText, string decimalSeparator)
         {
-            string textusAdParsendum = textusPantalae.Replace(separator, ".");
-            double numerusSecundus;
+            string textToParse = screenText.Replace(decimalSeparator, ".");
+            double secondNumber;
 
-            if (!string.IsNullOrEmpty(OperatioCurrens))
+            if (!string.IsNullOrEmpty(CurrentOperator))
             {
-                numerusSecundus = double.Parse(textusAdParsendum, CultureInfo.InvariantCulture);
-                NumerusUltimusSecundus = numerusSecundus;
-                OperatioUltima = OperatioCurrens;
-                OperatioCurrens = string.Empty;
+                secondNumber = double.Parse(textToParse, CultureInfo.InvariantCulture);
+                LastSecondNumber = secondNumber;
+                LastOperator = CurrentOperator;
+                CurrentOperator = string.Empty;
             }
-            else if (!string.IsNullOrEmpty(OperatioUltima))
+            else if (!string.IsNullOrEmpty(LastOperator))
             {
-                NumerusPrimus = double.Parse(textusAdParsendum, CultureInfo.InvariantCulture);
-                numerusSecundus = NumerusUltimusSecundus;
+                FirstNumber = double.Parse(textToParse, CultureInfo.InvariantCulture);
+                secondNumber = LastSecondNumber;
             }
             else
             {
-                return textusPantalae;
+                return screenText;
             }
 
-            double summa = calculatura(NumerusPrimus, numerusSecundus, OperatioUltima);
+            double result = calculatura(FirstNumber, secondNumber, LastOperator);
 
-            if (double.IsNaN(summa))
+            if (double.IsNaN(result))
             {
                 ClearAll();
-                return "Divisio per nihil!";
+                return "Деление на 0!";
             }
 
-            IsFacitPulsatum = true;
-            IsOperatioPulsata = false;
+            IsEqualsPressed = true;
+            IsOperatorPressed = false;
 
-            return summa.ToString(CultureInfo.InvariantCulture).Replace(".", separator);
+            return result.ToString(CultureInfo.InvariantCulture).Replace(".", decimalSeparator);
         }
 
-        // Полный сброс всего калькулятора (кнопка Сброс)
         public void ClearAll()
         {
-            NumerusPrimus = 0;
-            OperatioCurrens = string.Empty;
-            IsOperatioPulsata = false;
-            OperatioUltima = string.Empty;
-            NumerusUltimusSecundus = 0;
-            IsFacitPulsatum = false;
-            textusSumma = 0;
+            FirstNumber = 0;
+            CurrentOperator = string.Empty;
+            IsOperatorPressed = false;
+            LastOperator = string.Empty;
+            LastSecondNumber = 0;
+            IsEqualsPressed = false;
+            DisplayValue = 0;
         }
     }
 }
